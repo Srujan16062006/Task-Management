@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow | Modern Task Management Dashboard & Smart Notifications</title>
+  <meta name="description" content="Personalized user account and profile dashboard showing registered user credentials, email, date of birth, mobile number, and account controls.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dark-theme">
+  <!-- Dynamic Ambient Glows -->
+  <div class="bg-blur bg-blur-1"></div>
+  <div class="bg-blur bg-blur-2"></div>
+  <div class="bg-blur bg-blur-3"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Dashboard Layout -->
+  <div class="dash-layout">
+    
+
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <div class="dash-main-area">
+      
+      <!-- TOP NAVBAR -->
+      <header class="dash-navbar" id="dash-navbar">
+        <div class="nav-left">
+          <a href="dashboard.html" class="nav-brand-wrap">
+            <div class="brand-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            <div class="brand-text-wrap">
+              <span class="brand-title">TaskFlow</span>
+              <span class="brand-sub">Task Dashboard</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Center Horizontal Navigation Links -->
+        <nav class="header-nav-center" aria-label="Main Navigation">
+          <a href="#tasks-section" class="top-nav-link active" data-nav="tasks">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Tasks Board</span>
+          </a>
+          <a href="#smart-notifications" class="top-nav-link" data-nav="notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span>Smart Notifications</span>
+            <span class="top-nav-badge" id="sidebar-notif-badge">4</span>
+          </a>
+          <a href="#ai-assistant" class="top-nav-link" data-nav="ai-assistant">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><rect x="4" y="8" width="16" height="12" rx="2"/><circle cx="9" cy="13" r="1.5"/><circle cx="15" cy="13" r="1.5"/><path d="M9 17h6"/></svg>
+            <span>AI Copilot</span>
+            <span class="badge-ai-nav">NEW</span>
+          </a>
+          <a href="#personal-details" class="top-nav-link" data-nav="profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Profile</span>
+          </a>
+        </nav>
+
+        <!-- Right Action Utilities -->
+        <div class="header-right">
+          <!-- + New Task CTA Button -->
+          <button id="header-create-task-btn" class="btn-header-create" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>+ New Task</span>
+          </button>
+
+          <!-- Theme Switcher -->
+          <button id="header-theme-toggle" class="header-icon-btn" title="Toggle Theme" aria-label="Toggle Theme" type="button">
+            <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+
+          <!-- Smart Notifications Bell & Dropdown Wrapper -->
+          <div class="notif-dropdown-wrapper">
+            <button id="header-notif-btn" class="header-icon-btn notif-bell-btn" title="Smart Notifications" aria-label="Smart Notifications" aria-haspopup="true" aria-expanded="false" type="button">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="notif-badge-count" id="header-notif-count">4</span>
+              <span class="notif-ping-dot" id="header-notif-ping"></span>
+            </button>
+
+            <!-- Dropdown Notification Drawer -->
+            <div class="notif-drawer hidden" id="notif-drawer" role="dialog" aria-label="Smart Notifications Panel">
+              <div class="notif-drawer-header">
+                <div class="notif-header-title-row">
+                  <div class="notif-title-left">
+                    <span class="notif-header-title">Notifications</span>
+                    <span class="badge-unread-chip" id="notif-unread-chip">4 unread</span>
+                  </div>
+                  <div class="notif-header-actions">
+                    <button type="button" class="btn-notif-action" id="btn-mark-all-read" title="Mark all as read">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      <span>Mark all read</span>
+                    </button>
+                    <a href="#smart-notifications" class="btn-notif-action-icon" id="btn-drawer-goto-settings" title="Notification Preferences">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="notif-filter-pills" role="tablist">
+                  <button type="button" class="notif-pill-btn active" data-filter="all">All</button>
+                  <button type="button" class="notif-pill-btn" data-filter="unread">Unread</button>
+                  <button type="button" class="notif-pill-btn" data-filter="assigned">Assigned</button>
+                  <button type="button" class="notif-pill-btn" data-filter="reminder">Reminders</button>
+                  <button type="button" class="notif-pill-btn" data-filter="overdue">Overdue</button>
+                  <button type="button" class="notif-pill-btn" data-filter="mention">Mentions</button>
+                </div>
+              </div>
+
+              <div class="notif-list-body" id="drawer-notif-list">
+                <!-- Dynamically populated notifications -->
+              </div>
+
+              <div class="notif-drawer-footer">
+                <a href="#smart-notifications" class="notif-footer-link" id="link-drawer-full-center">
+                  <span>Open Full Notification Hub & Email Preview</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Menu Dropdown -->
+          <div class="user-dropdown-wrapper">
+            <button id="header-user-btn" class="header-user-btn" aria-haspopup="true" aria-expanded="false" type="button">
+              <div class="header-avatar" id="header-user-avatar">AM</div>
+              <span class="header-username" id="header-user-name">Alex</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="user-dropdown-menu hidden" id="user-dropdown-menu">
+              <div class="dropdown-header">
+                <p class="dropdown-name" id="drop-user-name">Alex Morgan</p>
+                <p class="dropdown-email" id="drop-user-email">alex@taskflow.io</p>
+              </div>
+              <div class="dropdown-divider"></div>
+              <button type="button" class="dropdown-item" id="drop-edit-profile-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                <span>Edit Profile Info</span>
+              </button>
+              <a href="#personal-details" class="dropdown-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Account Credentials</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <button type="button" class="dropdown-item item-logout" id="btn-header-logout">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>Sign Out</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- DASHBOARD CONTENT BODY -->
+      <main class="dash-content-body">
+        
+        <!-- SECTION 1: TASK DASHBOARD HERO & SPRINT PROGRESS -->
+        <section class="dash-section" id="tasks-overview">
+          <div class="hero-profile-card">
+            <div class="hero-left">
+              <div class="hero-badge">
+                <span class="pulse-emerald"></span>
+                <span>Active Workspace • Sprint 2026.4</span>
+              </div>
+              <h1 class="hero-title">Welcome back, <span id="hero-display-name">Alex</span>! 👋</h1>
+              <p class="hero-subtitle">Organize team deliverables, track approaching deadlines, and monitor smart notifications in real time.</p>
+              
+              <!-- Quick Info & Date Chips -->
+              <div class="profile-chips">
+                <div class="profile-chip">
+                  <span class="chip-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </span>
+                  <span class="chip-label">Session:</span>
+                  <strong class="chip-val" id="metric-session-time">Online</strong>
+                </div>
+                <div class="profile-chip">
+                  <span class="chip-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  </span>
+                  <span class="chip-label">Today:</span>
+                  <strong class="chip-val" id="hero-chip-date">Oct 3, 2026</strong>
+                </div>
+                <div class="profile-chip">
+                  <span class="chip-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  </span>
+                  <span class="chip-label">Account:</span>
+                  <strong class="chip-val" id="hero-chip-email">alex@taskflow.io</strong>
+                </div>
+              </div>
+
+              <!-- Live Sprint Task Progress Tracker -->
+              <div class="hero-progress-wrap">
+                <div class="hero-progress-label">
+                  <span>🎯 Sprint Task Completion</span>
+                  <strong id="hero-progress-text">5 of 8 completed (63%)</strong>
+                </div>
+                <div class="hero-progress-bar">
+                  <div class="hero-progress-fill" id="hero-progress-fill" style="width: 63%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hero Quick Actions -->
+            <div class="hero-actions" style="display: flex; flex-direction: column; gap: 0.65rem;">
+              <button id="btn-hero-create-task" class="btn-submit" type="button" style="width: 100%; justify-content: center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>+ Create Task</span>
+              </button>
+              <a href="#smart-notifications" class="btn-secondary" style="width: 100%; justify-content: center; text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span>View Smart Alerts</span>
+              </a>
+              <a href="#ai-assistant" class="btn-secondary" style="width: 100%; justify-content: center; text-decoration: none; display: inline-flex; align-items: center; gap: 0.45rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><rect x="4" y="8" width="16" height="12" rx="2"/></svg>
+                <span>Ask AI Copilot</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- KPI TASK METRIC CARDS (RESPONSIVE 4-CARD GRID) -->
+          <div class="metrics-grid">
+            <!-- Total Tasks -->
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Total Active Tasks</span>
+                <div class="metric-icon-box box-total">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                </div>
+              </div>
+              <div class="metric-body">
+                <span class="metric-number" id="kpi-total-tasks">8</span>
+                <span class="metric-tag tag-cyan">All Sprint</span>
+              </div>
+              <div class="metric-footer-bar">
+                <div class="bar-fill fill-indigo" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <!-- In Progress -->
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">In Progress</span>
+                <div class="metric-icon-box box-progress">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+              </div>
+              <div class="metric-body">
+                <span class="metric-number text-cyan" id="kpi-in-progress" style="color: var(--accent-cyan);">3</span>
+                <span class="metric-tag tag-cyan">Underway</span>
+              </div>
+              <div class="metric-footer-bar">
+                <div class="bar-fill fill-cyan" id="kpi-fill-progress" style="width: 38%;"></div>
+              </div>
+            </div>
+
+            <!-- Due Soon / Pending -->
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Pending / Due Soon</span>
+                <div class="metric-icon-box box-pending">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+              </div>
+              <div class="metric-body">
+                <span class="metric-number text-amber" id="kpi-pending" style="color: var(--accent-amber);">2</span>
+                <span class="metric-tag tag-amber">Deadlines</span>
+              </div>
+              <div class="metric-footer-bar">
+                <div class="bar-fill fill-amber" id="kpi-fill-pending" style="width: 25%;"></div>
+              </div>
+            </div>
+
+            <!-- Completed -->
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Completed Tasks</span>
+                <div class="metric-icon-box box-completed">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+              </div>
+              <div class="metric-body">
+                <span class="metric-number text-emerald" id="kpi-completed" style="color: var(--accent-emerald);">3</span>
+                <span class="metric-tag tag-emerald">Done</span>
+              </div>
+              <div class="metric-footer-bar">
+                <div class="bar-fill fill-emerald" id="kpi-fill-completed" style="width: 38%;"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 2: 📋 INTERACTIVE TASK MANAGEMENT BOARD -->
+        <section class="dash-section" id="tasks-section">
+          
+          <!-- Workspace Control & Search Bar -->
+          <div class="workspace-ctrl-bar">
+            <div>
+              <h2 class="workspace-title">📋 Task Management Board</h2>
+              <p class="workspace-subtitle">Filter deliverables, switch between Kanban and Table views, and manage workflow statuses.</p>
+            </div>
+
+            <div class="view-and-filters">
+              <!-- Search Input -->
+              <div class="header-search" style="max-width: 260px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="task-search-input" placeholder="Search tasks..." autocomplete="off">
+              </div>
+
+              <!-- Priority Filter -->
+              <select id="task-priority-filter" class="form-input select-filter" aria-label="Filter by priority">
+                <option value="all">All Priorities</option>
+                <option value="Urgent">Urgent</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+
+              <!-- Category Filter -->
+              <select id="task-category-filter" class="form-input select-filter" aria-label="Filter by category">
+                <option value="all">All Categories</option>
+                <option value="Development">Development</option>
+                <option value="Design">Design</option>
+                <option value="DevOps">DevOps</option>
+                <option value="QA">QA & Testing</option>
+                <option value="Management">Management</option>
+              </select>
+
+              <!-- View Switcher -->
+              <div class="view-toggle-group" role="tablist">
+                <button type="button" class="view-toggle-btn active" id="btn-view-kanban" title="Kanban Board View">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/></svg>
+                  <span>Board</span>
+                </button>
+                <button type="button" class="view-toggle-btn" id="btn-view-table" title="Table List View">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                  <span>List</span>
+                </button>
+              </div>
+
+              <!-- + Create Task Button -->
+              <button type="button" id="btn-board-create-task" class="btn-submit" style="padding: 0.52rem 1rem; font-size: 0.85rem;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>+ New Task</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Status Filter Tabs Row -->
+          <div class="task-filter-pills" role="tablist">
+            <button type="button" class="task-pill-btn active" data-task-tab="all">
+              <span>All Tasks</span>
+              <span class="pill-count" id="tab-count-all">8</span>
+            </button>
+            <button type="button" class="task-pill-btn" data-task-tab="in-progress">
+              <span>⚡ In Progress</span>
+              <span class="pill-count" id="tab-count-progress">3</span>
+            </button>
+            <button type="button" class="task-pill-btn" data-task-tab="pending">
+              <span>⏰ Due Soon / Pending</span>
+              <span class="pill-count" id="tab-count-pending">2</span>
+            </button>
+            <button type="button" class="task-pill-btn" data-task-tab="completed">
+              <span>✅ Completed</span>
+              <span class="pill-count" id="tab-count-completed">3</span>
+            </button>
+            <button type="button" class="task-pill-btn" data-task-tab="overdue" style="border-color: rgba(239, 68, 68, 0.4);">
+              <span>🚨 Overdue</span>
+              <span class="pill-count" id="tab-count-overdue" style="background: rgba(239, 68, 68, 0.2); color: #f87171;">1</span>
+            </button>
+          </div>
+
+          <!-- KANBAN BOARD VIEW -->
+          <div class="kanban-board-container" id="kanban-board-container">
+            
+            <!-- Column 1: To Do / Pending -->
+            <div class="kanban-column" id="kanban-col-todo">
+              <div class="column-header">
+                <div class="column-title-wrap">
+                  <span class="column-indicator col-amber"></span>
+                  <h3 class="column-title">To Do / Pending</h3>
+                </div>
+                <span class="column-count" id="count-todo">2</span>
+              </div>
+              <div class="kanban-cards-wrapper" id="cards-todo">
+                <!-- Dynamically populated -->
+              </div>
+              <button type="button" class="btn-col-add-task" data-default-status="pending">
+                + Add To Do Task
+              </button>
+            </div>
+
+            <!-- Column 2: In Progress -->
+            <div class="kanban-column" id="kanban-col-progress">
+              <div class="column-header">
+                <div class="column-title-wrap">
+                  <span class="column-indicator col-cyan"></span>
+                  <h3 class="column-title">In Progress</h3>
+                </div>
+                <span class="column-count" id="count-progress">3</span>
+              </div>
+              <div class="kanban-cards-wrapper" id="cards-progress">
+                <!-- Dynamically populated -->
+              </div>
+              <button type="button" class="btn-col-add-task" data-default-status="in-progress">
+                + Add In Progress Task
+              </button>
+            </div>
+
+            <!-- Column 3: Completed -->
+            <div class="kanban-column" id="kanban-col-completed">
+              <div class="column-header">
+                <div class="column-title-wrap">
+                  <span class="column-indicator col-emerald"></span>
+                  <h3 class="column-title">Completed</h3>
+                </div>
+                <span class="column-count" id="count-completed">3</span>
+              </div>
+              <div class="kanban-cards-wrapper" id="cards-completed">
+                <!-- Dynamically populated -->
+              </div>
+              <button type="button" class="btn-col-add-task" data-default-status="completed">
+                + Add Completed Task
+              </button>
+            </div>
+
+          </div>
+
+          <!-- TABLE LIST VIEW (Alternating View) -->
+          <div class="list-view-container hidden" id="table-view-container">
+            <div class="list-table-wrapper">
+              <table class="tasks-table">
+                <thead>
+                  <tr>
+                    <th>Task Details</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Assignee</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="tasks-table-body">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- SECTION: SMART NOTIFICATIONS -->
+        <section class="dash-section" id="smart-notifications">
+          
+          <!-- Smart Notifications Hero Card -->
+          <div class="notif-hero-card">
+            <div class="notif-hero-content">
+              <div class="notif-badge-pill">
+                <span class="pulse-emerald"></span>
+                <span>Smart Multi-Channel Engine • Real-time Active</span>
+              </div>
+              <h2 class="notif-hero-title">🔔 Smart Notifications & Alerts</h2>
+              <p class="notif-hero-desc">Automated intelligence for task assignments, due-date proximity reminders, critical overdue warnings, team @mentions, and synchronized email dispatches.</p>
+              
+              <!-- Quick Stats Counter Strip -->
+              <div class="notif-stats-strip">
+                <div class="notif-stat-pill stat-assigned">
+                  <span class="stat-pill-icon">👤</span>
+                  <span class="stat-pill-label">Assigned:</span>
+                  <strong class="stat-pill-val" id="stat-count-assigned">1</strong>
+                </div>
+                <div class="notif-stat-pill stat-reminders">
+                  <span class="stat-pill-icon">⏰</span>
+                  <span class="stat-pill-label">Reminders:</span>
+                  <strong class="stat-pill-val" id="stat-count-reminders">1</strong>
+                </div>
+                <div class="notif-stat-pill stat-overdue">
+                  <span class="stat-pill-icon">🚨</span>
+                  <span class="stat-pill-label">Overdue Alerts:</span>
+                  <strong class="stat-pill-val" id="stat-count-overdue">1</strong>
+                </div>
+                <div class="notif-stat-pill stat-mentions">
+                  <span class="stat-pill-icon">💬</span>
+                  <span class="stat-pill-label">Mentions:</span>
+                  <strong class="stat-pill-val" id="stat-count-mentions">1</strong>
+                </div>
+                <div class="notif-stat-pill stat-emails">
+                  <span class="stat-pill-icon">✉️</span>
+                  <span class="stat-pill-label">Emails Dispatched:</span>
+                  <strong class="stat-pill-val" id="stat-count-emails">4</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Simulator Quick Buttons -->
+            <div class="notif-simulator-box">
+              <div class="sim-header">
+                <span class="sim-title">⚡ Interactive Notification Studio</span>
+                <span class="sim-sub">Click to trigger instant smart alerts:</span>
+              </div>
+              <div class="sim-buttons-grid">
+                <button type="button" class="btn-sim sim-btn-assigned" id="sim-btn-assigned" title="Trigger Task Assigned Notification">
+                  <span>👤 Task Assigned</span>
+                </button>
+                <button type="button" class="btn-sim sim-btn-reminder" id="sim-btn-reminder" title="Trigger Due-Date Reminder">
+                  <span>⏰ Due-Date Reminder</span>
+                </button>
+                <button type="button" class="btn-sim sim-btn-overdue" id="sim-btn-overdue" title="Trigger Overdue Alert">
+                  <span>🚨 Urgent Overdue Alert</span>
+                </button>
+                <button type="button" class="btn-sim sim-btn-mention" id="sim-btn-mention" title="Trigger @Mention Notification">
+                  <span>💬 Team @Mention</span>
+                </button>
+                <button type="button" class="btn-sim sim-btn-email" id="sim-btn-email" title="Inspect Rendered HTML Email">
+                  <span>✉️ Preview Email Template</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-Column Layout: Notification Feed & Settings / Task Monitor -->
+          <div class="notif-grid-two">
+            
+            <!-- Left Column: Live Smart Notification Feed -->
+            <div class="analytics-card notif-feed-card">
+              <div class="analytics-card-header">
+                <div class="feed-header-left">
+                  <h3>Live Notification Feed</h3>
+                  <span class="badge-subtle" id="feed-items-count">4 items</span>
+                </div>
+                <div class="feed-header-right">
+                  <button type="button" class="btn-secondary btn-sm" id="btn-feed-mark-all">Mark All Read</button>
+                  <button type="button" class="btn-secondary btn-sm" id="btn-feed-clear-all" style="color: var(--accent-rose);">Clear All</button>
+                </div>
+              </div>
+
+              <!-- Filter tabs in feed -->
+              <div class="feed-tabs-row">
+                <div class="filter-tabs">
+                  <button type="button" class="filter-btn active" data-hub-filter="all">All</button>
+                  <button type="button" class="filter-btn" data-hub-filter="assigned">Task Assigned</button>
+                  <button type="button" class="filter-btn" data-hub-filter="reminder">Due Reminders</button>
+                  <button type="button" class="filter-btn" data-hub-filter="overdue">Overdue Alerts</button>
+                  <button type="button" class="filter-btn" data-hub-filter="mention">Mentions</button>
+                </div>
+              </div>
+
+              <!-- List of notifications -->
+              <div class="notif-feed-list" id="notif-feed-list">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+
+            <!-- Right Column: Email & Notification Settings + Monitored Tasks -->
+            <div class="notif-settings-column">
+              
+              <!-- Card: Email & In-App Notification Preferences -->
+              <div class="analytics-card">
+                <div class="analytics-card-header">
+                  <h3>Email & In-App Preferences</h3>
+                  <span class="badge-subtle">Channel Setup</span>
+                </div>
+
+                <div class="account-card-body">
+                  <div class="channel-info-box">
+                    <div class="channel-info-icon">✉️</div>
+                    <div class="channel-info-meta">
+                      <span class="channel-label">Delivery Email Address</span>
+                      <strong class="channel-email-val" id="pref-user-email">alex@taskflow.io</strong>
+                    </div>
+                    <button type="button" class="btn-email-preview-action" id="btn-quick-preview-email" title="Inspect Email Format">
+                      Preview Email
+                    </button>
+                  </div>
+
+                  <form id="notif-settings-form">
+                    <div class="pref-items-list">
+                      
+                      <!-- In-App Notification Alert Toggle -->
+                      <div class="pref-item">
+                        <div class="pref-meta">
+                          <h5>In-App Realtime Banners & Sound</h5>
+                          <p>Display floating toasts & play audio chime upon new alerts.</p>
+                        </div>
+                        <label class="switch-toggle" aria-label="Toggle in-app toasts">
+                          <input type="checkbox" id="pref-in-app-enabled" checked>
+                          <span class="slider"></span>
+                        </label>
+                      </div>
+
+                      <!-- Task Assigned Notification Toggle -->
+                      <div class="pref-item">
+                        <div class="pref-meta">
+                          <h5>Task Assigned Notifications (In-app & Email)</h5>
+                          <p>Notify instantly when a project lead or teammate assigns you a task.</p>
+                        </div>
+                        <label class="switch-toggle" aria-label="Toggle task assigned notifications">
+                          <input type="checkbox" id="pref-assigned-enabled" checked>
+                          <span class="slider"></span>
+                        </label>
+                      </div>
+
+                      <!-- Due-Date Reminder Notification Toggle -->
+                      <div class="pref-item">
+                        <div class="pref-meta">
+                          <h5>Due-Date Reminders</h5>
+                          <p>Receive proactive reminders 24 hours and 3 hours prior to deadline.</p>
+                        </div>
+                        <label class="switch-toggle" aria-label="Toggle due-date reminders">
+                          <input type="checkbox" id="pref-reminder-enabled" checked>
+                          <span class="slider"></span>
+                        </label>
+                      </div>
+
+                      <!-- Overdue Alert Notification Toggle -->
+                      <div class="pref-item">
+                        <div class="pref-meta">
+                          <h5>Urgent Overdue Alerts</h5>
+                          <p>High-priority alert banner & immediate email when a task passes due date.</p>
+                        </div>
+                        <label class="switch-toggle" aria-label="Toggle overdue alerts">
+                          <input type="checkbox" id="pref-overdue-enabled" checked>
+                          <span class="slider"></span>
+                        </label>
+                      </div>
+
+                      <!-- Mention Notification Toggle -->
+                      <div class="pref-item">
+                        <div class="pref-meta">
+                          <h5>Team @Mention Notifications</h5>
+                          <p>Notify when colleagues mention @Alex in task comments or reviews.</p>
+                        </div>
+                        <label class="switch-toggle" aria-label="Toggle mention alerts">
+                          <input type="checkbox" id="pref-mention-enabled" checked>
+                          <span class="slider"></span>
+                        </label>
+                      </div>
+
+                    </div>
+
+                    <div class="pref-frequency-wrap">
+                      <label class="form-label">Email Delivery Frequency</label>
+                      <div class="frequency-options">
+                        <label class="freq-radio">
+                          <input type="radio" name="email_freq" value="instant" checked>
+                          <span>⚡ Real-Time (Instant Delivery)</span>
+                        </label>
+                        <label class="freq-radio">
+                          <input type="radio" name="email_freq" value="digest">
+                          <span>📅 Daily Summary Digest (9:00 AM)</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div style="margin-top: 1.25rem;">
+                      <button type="submit" class="btn-submit" style="width: 100%; justify-content: center;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Save Notification Preferences</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Card: Monitored Tasks & Quick Add -->
+              <div class="analytics-card" style="margin-top: 1.5rem;">
+                <div class="analytics-card-header">
+                  <div>
+                    <h3>Monitored Deadlines & Tasks</h3>
+                    <span class="badge-subtle">Engine actively scanning deadlines</span>
+                  </div>
+                  <button type="button" class="btn-submit" id="btn-open-add-task-modal" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;">
+                    + New Task
+                  </button>
+                </div>
+
+                <div class="account-card-body" style="padding: 1rem 1.25rem;">
+                  <div class="monitored-tasks-list" id="monitored-tasks-list">
+                    <!-- Populated dynamically with tasks showing status badges -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: 1. 🤖 AI TASK ASSISTANT -->
+        <section class="dash-section" id="ai-assistant">
+          <div class="ai-assistant-card">
+            <!-- AI Header -->
+            <div class="ai-card-header">
+              <div class="ai-header-left">
+                <div class="ai-avatar-orb">
+                  <span class="ai-orb-core">🤖</span>
+                  <div class="ai-orb-ring"></div>
+                </div>
+                <div class="ai-header-meta">
+                  <div class="ai-title-row">
+                    <h2 class="ai-main-title">1. 🤖 AI Task Assistant</h2>
+                    <span class="badge-ai-status">
+                      <span class="pulse-emerald"></span>
+                      <span>Gemini Powered • Online</span>
+                    </span>
+                  </div>
+                  <p class="ai-subtitle">Intelligent copilot to plan schedules, break down project milestones, generate actionable tasks, and optimize your personal workflow.</p>
+                </div>
+              </div>
+              <div class="ai-header-right">
+                <button type="button" id="btn-clear-ai-chat" class="btn-secondary btn-sm" title="Clear Chat History">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                  <span>Reset Chat</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- AI Quick Suggestion Chips -->
+            <div class="ai-prompt-chips">
+              <span class="chips-label">Try asking:</span>
+              <button type="button" class="ai-chip" data-prompt="Plan my 3 most important tasks for today with estimated completion times.">
+                ⚡ Plan my tasks today
+              </button>
+              <button type="button" class="ai-chip" data-prompt="Break down building a full-stack web application into 5 step-by-step tasks.">
+                📋 Break down a project
+              </button>
+              <button type="button" class="ai-chip" data-prompt="Give me a 4-hour focused deep work schedule using the Pomodoro technique.">
+                🕒 4-Hour focus schedule
+              </button>
+              <button type="button" class="ai-chip" data-prompt="How do I prioritize urgent vs important tasks using the Eisenhower Matrix?">
+                🎯 Prioritize urgent goals
+              </button>
+              <button type="button" class="ai-chip" data-prompt="Give me 3 practical tips to avoid procrastination today.">
+                💡 Beat procrastination
+              </button>
+            </div>
+
+            <!-- AI Chat Conversation Box -->
+            <div class="ai-chat-window" id="ai-chat-window" role="log" aria-live="polite">
+              <!-- Initial Welcome Message -->
+              <div class="ai-msg ai-msg-bot">
+                <div class="ai-msg-avatar">🤖</div>
+                <div class="ai-msg-content">
+                  <div class="ai-msg-sender">AI Task Assistant</div>
+                  <div class="ai-msg-text">
+                    Hello <strong id="ai-user-name">there</strong>! 👋 I'm your dedicated <strong>AI Task Assistant</strong>.
+                    <br><br>
+                    I can help you:
+                    <ul class="ai-list-preview">
+                      <li>✨ <strong>Break down complex goals</strong> into bite-sized, actionable tasks.</li>
+                      <li>🎯 <strong>Prioritize your daily schedule</strong> based on deadlines and urgency.</li>
+                      <li>⏱️ <strong>Estimate time commitments</strong> and suggest productivity techniques.</li>
+                      <li>📋 <strong>Generate checklists</strong> for work, study, coding, or personal routines.</li>
+                    </ul>
+                    Click any suggested prompt above or type your task question below to begin!
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="ai-typing-indicator hidden" id="ai-typing-indicator">
+              <div class="ai-msg-avatar">🤖</div>
+              <div class="typing-bubble">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-text">AI is thinking...</span>
+              </div>
+            </div>
+
+            <!-- AI Input Box -->
+            <form id="ai-chat-form" class="ai-input-form">
+              <div class="ai-input-container">
+                <span class="ai-input-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </span>
+                <input 
+                  type="text" 
+                  id="ai-user-input" 
+                  class="ai-input-field" 
+                  placeholder="Ask AI Assistant to organize tasks, plan a project, or schedule your day..."
+                  autocomplete="off"
+                  required
+                >
+                <button type="submit" id="btn-ai-send" class="btn-ai-send" title="Send Prompt">
+                  <span>Send</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </section>
+
+        <!-- SECTION 2: DETAILED PERSONAL INFORMATION & ACCOUNT CREDENTIALS -->
+        <section class="dash-section" id="personal-details">
+          <div class="analytics-grid">
+            
+            <!-- Personal Profile Information Card -->
+            <div class="analytics-card">
+              <div class="analytics-card-header">
+                <h3>Personal Information</h3>
+                <span class="badge-subtle">Registered Details</span>
+              </div>
+              
+              <div class="account-card-body">
+                <div class="profile-hero-avatar-row">
+                  <div class="avatar-large" id="profile-card-avatar">AM</div>
+                  <div class="profile-hero-meta">
+                    <h4 id="profile-card-name">Alex Morgan</h4>
+                    <span class="profile-role-tag">Registered User</span>
+                  </div>
+                </div>
+
+                <div class="profile-key-values">
+                  <div class="kv-item">
+                    <span class="kv-label">Full Name</span>
+                    <span class="kv-val" id="profile-card-name-val">Alex Morgan</span>
+                  </div>
+                  <div class="kv-item">
+                    <span class="kv-label">Email Address (Mail)</span>
+                    <span class="kv-val" id="profile-card-email">alex@taskflow.io</span>
+                  </div>
+                  <div class="kv-item">
+                    <span class="kv-label">Mobile Number</span>
+                    <span class="kv-val" id="profile-card-mobile">+91 98765 43210</span>
+                  </div>
+                  <div class="kv-item">
+                    <span class="kv-label">Date of Birth (DOB)</span>
+                    <span class="kv-val" id="profile-card-dob">1998-05-15</span>
+                  </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; pt: 1rem; border-top: 1px solid var(--border-subtle);">
+                  <button id="btn-card-edit-profile" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    <span>Update Profile Information</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Security & Account Settings Card -->
+            <div class="analytics-card" id="security-settings">
+              <div class="analytics-card-header">
+                <h3>Security & Credentials</h3>
+                <span class="badge-subtle">Security Center</span>
+              </div>
+              
+              <div class="account-card-body">
+                <div class="security-items-list">
+                  
+                  <div class="security-item">
+                    <div class="sec-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <div class="sec-meta">
+                      <h5>Password Protection</h5>
+                      <p>Your password is active and secured.</p>
+                    </div>
+                    <span class="status-secure">Active</span>
+                  </div>
+
+                  <div class="security-item">
+                    <div class="sec-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div class="sec-meta">
+                      <h5>Email Verification</h5>
+                      <p>Used for login and account recovery.</p>
+                    </div>
+                    <span class="status-secure">Verified</span>
+                  </div>
+
+                  <div class="security-item">
+                    <div class="sec-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="sec-meta">
+                      <h5>Mobile Contact</h5>
+                      <p>SMS notifications and two-step verification ready.</p>
+                    </div>
+                    <span class="status-secure">Configured</span>
+                  </div>
+
+                </div>
+
+                <div style="margin-top: 1.5rem; pt: 1rem; border-top: 1px solid var(--border-subtle);">
+                  <button id="btn-card-logout" class="btn-logout" style="width: 100%; justify-content: center; padding: 0.75rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    <span>Sign Out of Account</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- EDIT PROFILE MODAL -->
+  <div id="edit-profile-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-profile-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-profile-title">Edit Profile Information</h3>
+        <button type="button" id="btn-close-profile-modal" class="btn-modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <p class="modal-subtitle">Update your personal details. Changes will be saved to your active account.</p>
+      
+      <form id="edit-profile-form">
+        <!-- Name Field -->
+        <div class="form-group">
+          <label for="edit-name" class="form-label">Full Name</label>
+          <div class="input-container">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" id="edit-name" class="form-input" required>
+          </div>
+        </div>
+
+        <!-- Email Field (Read only / Display) -->
+        <div class="form-group">
+          <label for="edit-email" class="form-label">Email Address (Mail)</label>
+          <div class="input-container">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <input type="email" id="edit-email" class="form-input" disabled style="opacity: 0.6; cursor: not-allowed;">
+          </div>
+          <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; display: block;">Email is linked to your account ID.</span>
+        </div>
+
+        <!-- Date of Birth & Mobile -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-dob" class="form-label">Date of Birth</label>
+            <div class="input-container">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </span>
+              <input type="date" id="edit-dob" class="form-input date-input" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-mobile" class="form-label">Mobile Number</label>
+            <div class="input-container">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </span>
+              <input type="tel" id="edit-mobile" class="form-input" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btn-cancel-profile-modal" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-submit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- EMAIL NOTIFICATION PREVIEW MODAL -->
+  <div id="email-preview-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-email-title">
+    <div class="modal-card email-modal-card">
+      <div class="modal-header">
+        <div class="email-modal-header-meta">
+          <span class="badge-email-tag">Email Notification Preview</span>
+          <h3 id="modal-email-title">Subject: 🚨 TaskFlow Notification</h3>
+        </div>
+        <button type="button" id="btn-close-email-modal" class="btn-modal-close" aria-label="Close modal">&times;</button>
+      </div>
+
+      <!-- Email Envelope Simulation Header -->
+      <div class="email-envelope-bar">
+        <div class="envelope-row">
+          <span class="env-label">From:</span>
+          <span class="env-val"><strong>TaskFlow Alerts</strong> &lt;notifications@taskflow.io&gt;</span>
+        </div>
+        <div class="envelope-row">
+          <span class="env-label">To:</span>
+          <span class="env-val"><strong id="modal-email-recipient-name">Alex Morgan</strong> &lt;<span id="modal-email-recipient-addr">alex@taskflow.io</span>&gt;</span>
+        </div>
+        <div class="envelope-row">
+          <span class="env-label">Date:</span>
+          <span class="env-val" id="modal-email-date">Oct 3, 2026, 4:25 PM</span>
+        </div>
+        <div class="envelope-row">
+          <span class="env-label">Channel:</span>
+          <span class="env-val"><span class="badge-verified-email">✓ Delivered via SMTP simulation</span></span>
+        </div>
+      </div>
+
+      <!-- Rendered Email Body Preview Canvas -->
+      <div class="email-body-canvas" id="email-body-canvas">
+        <!-- Rendered HTML email preview -->
+      </div>
+
+      <div class="modal-actions" style="margin-top: 1.25rem;">
+        <button type="button" id="btn-dismiss-email-modal" class="btn-secondary">Close Preview</button>
+        <button type="button" id="btn-resend-email-test" class="btn-submit">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          <span>Send Again</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD / EDIT TASK MODAL -->
+  <div id="add-task-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-add-task-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-add-task-title">Create / Edit Task</h3>
+        <button type="button" id="btn-close-task-modal" class="btn-modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <p class="modal-subtitle">Add a task with deadline, priority & assignee. Smart Notifications will automatically trigger assignments, reminders, or overdue warnings.</p>
+      
+      <form id="add-task-form">
+        <input type="hidden" id="task-id-hidden" value="">
+
+        <div class="form-group">
+          <label for="task-title-input" class="form-label">Task Title</label>
+          <div class="input-container">
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            </span>
+            <input type="text" id="task-title-input" class="form-input" placeholder="e.g. Design System Tokens & Dark Theme Refactor" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="task-desc-input" class="form-label">Task Description</label>
+          <div class="input-container">
+            <textarea id="task-desc-input" class="form-input" rows="2" placeholder="Brief deliverables or milestone notes..." style="padding: 0.65rem 0.85rem; height: auto; min-height: 65px; resize: vertical;"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-category-input" class="form-label">Category</label>
+            <div class="input-container">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              </span>
+              <select id="task-category-input" class="form-input" required>
+                <option value="Development">Development</option>
+                <option value="Design">Design</option>
+                <option value="DevOps">DevOps</option>
+                <option value="QA">QA & Testing</option>
+                <option value="Management">Management</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="task-priority-input" class="form-label">Priority Level</label>
+            <div class="input-container">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </span>
+              <select id="task-priority-input" class="form-input">
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Urgent">Urgent</option>
+                <option value="Low">Low</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-assignee-input" class="form-label">Assignee</label>
+            <div class="input-container">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <select id="task-assignee-input" class="form-input" required>
+                <option value="Alex Morgan (You)">Alex Morgan (You)</option>
+                <option value="Marcus Chen">Marcus Chen (Lead)</option>
+                <option value="Sophia Patel">Sophia Patel (Backend)</option>
+                <option value="David Kim">David Kim (Design)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="task-status-input" class="form-label">Initial Workflow Status</label>
+            <div class="input-container">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline></svg>
+              </span>
+              <select id="task-status-input" class="form-input">
+                <option value="pending">To Do / Pending</option>
+                <option value="in-progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-due-date-input" class="form-label">Due Date</label>
+            <div class="input-container">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </span>
+              <input type="date" id="task-due-date-input" class="form-input date-input" required>
+            </div>
+            <span style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem; display: block;">Past dates trigger Overdue alert; today/tomorrow triggers Reminders.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="task-mention-input" class="form-label">Mention Colleague (Optional)</label>
+            <div class="input-container">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
+              </span>
+              <input type="text" id="task-mention-input" class="form-input" placeholder="e.g. @Alex please review before deploy">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btn-cancel-task-modal" class="btn-secondary">Cancel</button>
+          <button type="submit" id="btn-submit-task" class="btn-submit">Save & Monitor Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

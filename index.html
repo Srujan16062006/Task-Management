@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow | Auth & Task Management</title>
+  <meta name="description" content="Modern Task Management Application with secure user authentication, registration, and comprehensive task tracking.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Dynamic Background Glows -->
+  <div class="bg-blur bg-blur-1"></div>
+  <div class="bg-blur bg-blur-2"></div>
+  <div class="bg-blur bg-blur-3"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Main Container -->
+  <div class="app-wrapper">
+
+    <!-- AUTHENTICATION VIEW -->
+    <main id="auth-section" class="auth-wrapper">
+      <div class="auth-card">
+        
+        <!-- Left Showcase Brand Panel -->
+        <div class="auth-showcase">
+          <div class="showcase-content">
+            <div class="brand-badge">
+              <span class="brand-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+              </span>
+              <span class="brand-title">TaskFlow</span>
+            </div>
+
+            <div class="showcase-body">
+              <h1 class="showcase-heading">Manage Your Tasks With Seamless Precision</h1>
+              <p class="showcase-desc">Track progress, organize projects, and collaborate effectively with an intuitive workflow system.</p>
+
+              <div class="showcase-features">
+                <div class="feature-item">
+                  <div class="feature-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <span>Secure User Authentication & Profile</span>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <span>Complete CRUD Operations for Tasks</span>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <span>Real-time Status Tracking & Metrics</span>
+                </div>
+              </div>
+
+              <!-- Quick Demo Pill -->
+              <div class="demo-credential-box">
+                <div class="demo-box-header">
+                  <span class="pulse-dot"></span>
+                  <span class="demo-title">Quick Demo Credentials:</span>
+                </div>
+                <p class="demo-text">Email: <code>alex@taskflow.io</code><br>Password: <code>Task1234!</code></p>
+                <button type="button" id="btn-fill-demo" class="btn-demo-fill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                  One-Click Auto Fill
+                </button>
+              </div>
+            </div>
+
+            <div class="showcase-footer">
+              <span>Task Management Web Application &copy; 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Form Panel -->
+        <div class="auth-form-container">
+          
+          <!-- Top Utility Bar (Theme switch) -->
+          <div class="top-bar">
+            <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme" aria-label="Toggle Theme">
+              <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+          </div>
+
+          <!-- Auth Navigation Switcher (Sliding Tabs) -->
+          <div class="tab-switcher-wrapper">
+            <div class="tab-switcher" role="tablist">
+              <button id="tab-login" class="tab-btn active" role="tab" aria-selected="true" aria-controls="login-form-panel">
+                Log In
+              </button>
+              <button id="tab-register" class="tab-btn" role="tab" aria-selected="false" aria-controls="register-form-panel">
+                Create Account
+              </button>
+              <div class="tab-indicator" id="tab-indicator"></div>
+            </div>
+          </div>
+
+          <!-- LOGIN FORM PANEL -->
+          <div id="login-form-panel" class="form-panel active" role="tabpanel">
+            <div class="panel-header">
+              <h2 class="panel-title">Welcome Back</h2>
+              <p class="panel-subtitle">Enter your mail and password to access your task dashboard.</p>
+            </div>
+
+            <form id="login-form" novalidate>
+              <!-- Mail / Email Field -->
+              <div class="form-group">
+                <label for="login-email" class="form-label">Email Address (Mail)</label>
+                <div class="input-container">
+                  <span class="input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  </span>
+                  <input 
+                    type="email" 
+                    id="login-email" 
+                    name="email" 
+                    class="form-input" 
+                    placeholder="name@example.com" 
+                    autocomplete="email" 
+                    required
+                  >
+                </div>
+                <span class="field-error" id="login-email-error"></span>
+              </div>
+
+              <!-- Password Field -->
+              <div class="form-group">
+                <div class="label-row">
+                  <label for="login-password" class="form-label">Password</label>
+                  <a href="#" id="link-forgot-pass" class="link-muted">Forgot password?</a>
+                </div>
+                <div class="input-container">
+                  <span class="input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  </span>
+                  <input 
+                    type="password" 
+                    id="login-password" 
+                    name="password" 
+                    class="form-input" 
+                    placeholder="Enter your password" 
+                    autocomplete="current-password" 
+                    required
+                  >
+                  <button type="button" class="btn-toggle-pass" data-target="login-password" aria-label="Toggle password visibility">
+                    <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="eye-closed hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                  </button>
+                </div>
+                <span class="field-error" id="login-password-error"></span>
+              </div>
+
+              <!-- Remember Me & Helpers -->
+              <div class="form-options">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="login-remember">
+                  <span class="checkmark"></span>
+                  <span class="checkbox-text">Keep me logged in</span>
+                </label>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" id="btn-login-submit" class="btn-submit">
+                <span class="btn-text">Sign In to Dashboard</span>
+                <span class="btn-loader hidden"></span>
+              </button>
+            </form>
+
+            <div class="panel-switch-prompt">
+              <span>Don't have an account yet?</span>
+              <button type="button" class="link-primary" id="switch-to-register">Create Account</button>
+            </div>
+          </div>
+
+          <!-- CREATE ACCOUNT (REGISTER) FORM PANEL -->
+          <div id="register-form-panel" class="form-panel" role="tabpanel">
+            <div class="panel-header">
+              <h2 class="panel-title">Create Account</h2>
+              <p class="panel-subtitle">Join TaskFlow to organize, track, and complete your tasks.</p>
+            </div>
+
+            <form id="register-form" novalidate>
+              <!-- Name Field -->
+              <div class="form-group">
+                <label for="reg-name" class="form-label">Full Name</label>
+                <div class="input-container">
+                  <span class="input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </span>
+                  <input 
+                    type="text" 
+                    id="reg-name" 
+                    name="name" 
+                    class="form-input" 
+                    placeholder="Alex Morgan" 
+                    autocomplete="name" 
+                    required
+                  >
+                </div>
+                <span class="field-error" id="reg-name-error"></span>
+              </div>
+
+              <!-- Email / Mail Field -->
+              <div class="form-group">
+                <label for="reg-email" class="form-label">Email Address (Mail)</label>
+                <div class="input-container">
+                  <span class="input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  </span>
+                  <input 
+                    type="email" 
+                    id="reg-email" 
+                    name="email" 
+                    class="form-input" 
+                    placeholder="alex@example.com" 
+                    autocomplete="email" 
+                    required
+                  >
+                </div>
+                <span class="field-error" id="reg-email-error"></span>
+              </div>
+
+              <!-- Two Column Row: DOB & Mobile Number -->
+              <div class="form-row">
+                <!-- Date of Birth Field -->
+                <div class="form-group">
+                  <label for="reg-dob" class="form-label">Date of Birth</label>
+                  <div class="input-container">
+                    <span class="input-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </span>
+                    <input 
+                      type="date" 
+                      id="reg-dob" 
+                      name="dob" 
+                      class="form-input date-input" 
+                      required
+                    >
+                  </div>
+                  <span class="field-error" id="reg-dob-error"></span>
+                </div>
+
+                <!-- Mobile Number Field -->
+                <div class="form-group">
+                  <label for="reg-mobile" class="form-label">Mobile Number</label>
+                  <div class="input-container">
+                    <span class="input-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </span>
+                    <input 
+                      type="tel" 
+                      id="reg-mobile" 
+                      name="mobile" 
+                      class="form-input" 
+                      placeholder="+91 98765 43210" 
+                      autocomplete="tel" 
+                      required
+                    >
+                  </div>
+                  <span class="field-error" id="reg-mobile-error"></span>
+                </div>
+              </div>
+
+              <!-- Password Field -->
+              <div class="form-group">
+                <label for="reg-password" class="form-label">Password</label>
+                <div class="input-container">
+                  <span class="input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  </span>
+                  <input 
+                    type="password" 
+                    id="reg-password" 
+                    name="password" 
+                    class="form-input" 
+                    placeholder="Minimum 8 characters" 
+                    autocomplete="new-password" 
+                    required
+                  >
+                  <button type="button" class="btn-toggle-pass" data-target="reg-password" aria-label="Toggle password visibility">
+                    <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg class="eye-closed hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                  </button>
+                </div>
+                <!-- Password Strength Meter -->
+                <div class="password-meter-wrap">
+                  <div class="meter-bars">
+                    <span class="meter-bar" id="meter-1"></span>
+                    <span class="meter-bar" id="meter-2"></span>
+                    <span class="meter-bar" id="meter-3"></span>
+                    <span class="meter-bar" id="meter-4"></span>
+                  </div>
+                  <span class="meter-label" id="meter-text">Strength: enter password</span>
+                </div>
+                <span class="field-error" id="reg-password-error"></span>
+              </div>
+
+              <!-- Terms and Conditions Checkbox -->
+              <div class="form-group checkbox-group">
+                <label class="checkbox-container">
+                  <input type="checkbox" id="reg-terms" required>
+                  <span class="checkmark"></span>
+                  <span class="checkbox-text">
+                    I agree to the <a href="#" class="link-highlight">Terms of Service</a> & <a href="#" class="link-highlight">Privacy Policy</a>
+                  </span>
+                </label>
+                <span class="field-error" id="reg-terms-error"></span>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" id="btn-register-submit" class="btn-submit">
+                <span class="btn-text">Create Account</span>
+                <span class="btn-loader hidden"></span>
+              </button>
+            </form>
+
+            <div class="panel-switch-prompt">
+              <span>Already have an account?</span>
+              <button type="button" class="link-primary" id="switch-to-login">Log In</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- FORGOT PASSWORD MODAL -->
+    <div id="forgot-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="forgot-modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="forgot-modal-title">Reset Your Password</h3>
+          <button type="button" id="btn-close-forgot-modal" class="btn-modal-close" aria-label="Close modal">&times;</button>
+        </div>
+        <p class="modal-subtitle">Enter your registered email address and we'll send you instructions to reset your password.</p>
+        <form id="forgot-form">
+          <div class="form-group">
+            <label for="forgot-email" class="form-label">Email Address (Mail)</label>
+            <div class="input-container">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </span>
+              <input type="email" id="forgot-email" class="form-input" placeholder="name@example.com" required>
+            </div>
+            <span class="field-error" id="forgot-email-error"></span>
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="btn-cancel-forgot" class="btn-secondary">Cancel</button>
+            <button type="submit" class="btn-submit">Send Reset Link</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
